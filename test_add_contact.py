@@ -2,10 +2,9 @@
 from selenium import webdriver
 
 from selenium.webdriver.support.ui import Select
-from selenium.common.exceptions import NoSuchElementException
-from selenium.common.exceptions import NoAlertPresentException
 import unittest
 from contact import Contact
+
 
 class TestAddContact(unittest.TestCase):
     def setUp(self):
@@ -47,22 +46,46 @@ class TestAddContact(unittest.TestCase):
         wd.find_element_by_name("address").click()
         wd.find_element_by_name("address").clear()
         wd.find_element_by_name("address").send_keys(contact.address)
+        wd.find_element_by_name("home").click()
+        wd.find_element_by_name("home").clear()
+        wd.find_element_by_name("home").send_keys(contact.home)
         wd.find_element_by_name("mobile").click()
         wd.find_element_by_name("mobile").clear()
         wd.find_element_by_name("mobile").send_keys(contact.mobile)
+        wd.find_element_by_name("work").click()
+        wd.find_element_by_name("work").clear()
+        wd.find_element_by_name("work").send_keys(contact.work)
+        wd.find_element_by_name("fax").click()
+        wd.find_element_by_name("fax").clear()
+        wd.find_element_by_name("fax").send_keys(contact.fax)
         wd.find_element_by_name("email").click()
         wd.find_element_by_name("email").clear()
         wd.find_element_by_name("email").send_keys(contact.email)
+        wd.find_element_by_name("email2").click()
+        wd.find_element_by_name("email2").clear()
+        wd.find_element_by_name("email2").send_keys(contact.email2)
+        wd.find_element_by_name("email3").click()
+        wd.find_element_by_name("email3").clear()
+        wd.find_element_by_name("email3").send_keys(contact.email3)
+        wd.find_element_by_name("homepage").click()
+        wd.find_element_by_name("homepage").clear()
+        wd.find_element_by_name("homepage").send_keys(contact.homepage)
         # birthday form
         wd.find_element_by_name("bday").click()
         Select(wd.find_element_by_name("bday")).select_by_visible_text(contact.bday)
-        wd.find_element_by_xpath("//option[@value='9']").click()
         wd.find_element_by_name("bmonth").click()
         Select(wd.find_element_by_name("bmonth")).select_by_visible_text(contact.bmonth)
-        wd.find_element_by_xpath("//option[@value='July']").click()
         wd.find_element_by_name("byear").click()
         wd.find_element_by_name("byear").clear()
         wd.find_element_by_name("byear").send_keys(contact.byear)
+        # anniversary form
+        wd.find_element_by_name("aday").click()
+        Select(wd.find_element_by_name("aday")).select_by_visible_text(contact.aday)
+        wd.find_element_by_name("amonth").click()
+        Select(wd.find_element_by_name("amonth")).select_by_visible_text(contact.amonth)
+        wd.find_element_by_name("ayear").click()
+        wd.find_element_by_name("ayear").clear()
+        wd.find_element_by_name("ayear").send_keys(contact.ayear)
 
     def return_to_contact_page(self, wd):
         wd.find_element_by_xpath("//div[@id='content']/form/input[20]").click()
@@ -70,27 +93,17 @@ class TestAddContact(unittest.TestCase):
     def logout(self, wd):
         wd.find_element_by_link_text("Logout").click()
 
-    def is_element_present(self, how, what):
-        try:
-            self.wd.find_element(by=how, value=what)
-        except NoSuchElementException as e:
-            return False
-        return True
-
-    def is_alert_present(self):
-        try:
-            self.wd.switch_to_alert()
-        except NoAlertPresentException as e:
-            return False
-        return True
-
     def test_add_contact(self):
         wd = self.wd
         self.open_home_page_contact(wd)
         self.login(wd, username="admin", password="secret")
-        self.create_contact(wd, Contact(firstname="Ivan", middlename = "Ivanovich", lastname="Ivanov", nickname="test_user_ivan",
-                       title="test_user", company="ABC", address="ABC city", mobile="70000000000",
-                       email="test@testtest.com", bday="9", bmonth="July", byear="1970"))
+        self.create_contact(wd, Contact(firstname="Ivan", middlename="Ivanovich", lastname="Ivanov",
+                                        nickname="test_user_ivan",
+                                        title="test_user", company="ABC", address="ABC city", home="ABC",
+                                        mobile="70000000000", work="71000000000", fax="72000000000",
+                                        email="test@testtest.com", email2="test2@testtest.com",
+                                        email3="test3@testtest.com", homepage="www.ya.ru", bday="9", bmonth="July",
+                                        byear="1970", aday="8", amonth="June", ayear="1999"))
         self.return_to_contact_page(wd)
         self.logout(wd)
 
@@ -98,12 +111,12 @@ class TestAddContact(unittest.TestCase):
         wd = self.wd
         self.open_home_page_contact(wd)
         self.login(wd, username="admin", password="secret")
-        self.create_contact(wd, Contact(firstname="", middlename = "", lastname="", nickname="",
-                       title="", company="", address="", mobile="",
-                       email="", bday="-", bmonth="-", byear=""))
+        self.create_contact(wd, Contact(firstname="", middlename="", lastname="", nickname="",
+                                        title="", company="", address="", home="", mobile="", work="", fax="",
+                                        email="", email2="", email3="", homepage="", bday="", bmonth="-", byear="",
+                                        aday="", amonth="-", ayear=""))
         self.return_to_contact_page(wd)
         self.logout(wd)
-
 
     def tearDown(self):
         self.wd.quit()
