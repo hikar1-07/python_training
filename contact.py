@@ -7,11 +7,21 @@ class Contact:
                  title,
                  company,
                  address,
+                 home,
                  mobile,
+                 work,
+                 fax,
                  email,
+                 email2,
+                 email3,
+                 homepage,
                  bday,
                  bmonth,
-                 byear):
+                 byear,
+                 aday,
+                 amonth,
+                 ayear
+                 ):
         self.firstname = firstname
         self.middlename = middlename
         self.lastname = lastname
@@ -19,8 +29,17 @@ class Contact:
         self.title = title
         self.company = company
         self.address = address
+        self.home = home
         self.mobile = mobile
+        self.work = work
+        self.fax = fax
         self.email = email
+        self.email2 = email2
+        self.email3 = email3
+        self.homepage = homepage
         self.bday = bday
         self.bmonth = bmonth
         self.byear = byear
+        self.aday = aday
+        self.amonth = amonth
+        self.ayear = ayear
