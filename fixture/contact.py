@@ -3,11 +3,15 @@ class ContactHelper:
     def __init__(self, app):
         self.app = app
 
+    def open_home_page_contact(self):
+        wd = self.app.wd
+        wd.find_element_by_link_text("add new").click()
+        wd.get("http://localhost/addressbook/edit.php")
 
     def create_contact(self, contact):
         wd = self.app.wd
         Select = self.app.Select
-        self.app.open_home_page_contact()
+        self.open_home_page_contact()
         # init contact creation
         # fill contact firm
         wd.find_element_by_name("firstname").click()
@@ -71,7 +75,10 @@ class ContactHelper:
         wd.find_element_by_name("ayear").click()
         wd.find_element_by_name("ayear").clear()
         wd.find_element_by_name("ayear").send_keys(contact.ayear)
+        wd.find_element_by_xpath("//div[@id='content']/form/input[20]").click()
+        self.return_to_contact_page()
 
     def return_to_contact_page(self):
         wd = self.app.wd
-        wd.find_element_by_xpath("//div[@id='content']/form/input[20]").click()
+        wd.find_element_by_link_text("home page").click()
+        wd.get("http://localhost/addressbook/index.php")

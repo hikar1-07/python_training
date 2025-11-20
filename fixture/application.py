@@ -18,11 +18,7 @@ class Application:
 
     def open_home_page(self):
         wd = self.wd
-        wd.get("http://localhost/addressbook/group.php")
-
-    def open_home_page_contact(self):
-        wd = self.wd
-        wd.get("http://localhost/addressbook/edit.php")
+        wd.get("http://localhost/addressbook/index.php")
 
     def destroy(self):
         self.wd.quit()
