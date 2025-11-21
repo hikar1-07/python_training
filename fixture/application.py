@@ -15,6 +15,7 @@ class Application:
         self.group = GroupHelper(self)
         self.contact = ContactHelper(self)
         self.Select = Select
+
     def is_valid(self):
         try:
             self.wd.current_url
