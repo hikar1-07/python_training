@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from model.contact import Contact
+from conftest import app
 
 
 def test_add_contact(app):

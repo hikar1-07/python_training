@@ -1,4 +1,5 @@
 from model.group import Group
+from conftest import app
 
 
 def test_modify_first_group_name(app):
