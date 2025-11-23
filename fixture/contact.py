@@ -9,12 +9,13 @@ class ContactHelper:
 
     def return_to_contact_page(self):
         wd = self.app.wd
-        wd.find_element_by_link_text("home").click()
+        if not (wd.current_url.endswith("/addressbook/") or wd.current_url.endswith("/index.php") and len(wd.find_elements_by_name("searchstring")) > 0):
+            wd.find_element_by_link_text("home").click()
         # wd.find_element_by_xpath("//a[text()='home']").click()
 
     def delete_first_contact(self):
         wd = self.app.wd
-        self.return_to_contact_page()
+        # self.return_to_contact_page()
         wd.find_element_by_name("selected[]").click()
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         # wd.switch_to.alert.accept().click()
