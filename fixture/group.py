@@ -52,10 +52,8 @@ class GroupHelper:
         wd = self.app.wd
         self.open_groups_page()
         self.select_first_group()
-        # submit modify
         wd.find_element_by_name("edit").click()
         self.fill_group_form(new_group_data)
-        # submit group update
         wd.find_element_by_name("update").click()
         self.return_to_groups_page()
         self.group_cache = None
