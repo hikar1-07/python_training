@@ -1,3 +1,6 @@
+from model.contact import Contact
+
+
 class ContactHelper:
 
     def __init__(self, app):
@@ -13,7 +16,6 @@ class ContactHelper:
         if (wd.current_url.endswith("/addressbook/") or wd.current_url.endswith("/index.php")) and len(wd.find_elements_by_name("searchstring")) > 0:
             return
         wd.find_element_by_link_text("home").click()
-
 
     def contact_modify_presteps(self):
         wd = self.app.wd
@@ -91,7 +93,6 @@ class ContactHelper:
         self.change_contact_field_value("email3", contact.email3)
         self.change_contact_field_value("homepage", contact.homepage)
 
-
     def fill_contact_form_adata(self, Select, contact):
         wd = self.app.wd
         if contact.aday is not None:
@@ -129,3 +130,15 @@ class ContactHelper:
         wd = self.app.wd
         self.return_to_contact_page()
         return len(wd.find_elements_by_name("selected[]"))
+
+    def get_contact_list(self):
+        wd = self.app.wd
+        self.return_to_contact_page()
+        contacts = []
+        for element in wd.find_elements_by_name("entry"):
+            cells = element.find_elements_by_tag_name("td")
+            id = cells[0].find_element_by_name("selected[]").get_attribute("value")
+            lastname = cells[1].text
+            firstname = cells[2].text
+            contacts.append(Contact(firstname=firstname, lastname=lastname, id=id))
+        return contacts
