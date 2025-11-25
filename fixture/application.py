@@ -10,11 +10,18 @@ class Application:
 
     def __init__(self):
         self.wd = webdriver.Firefox()
-        self.wd.implicitly_wait(60)
+        self.wd.implicitly_wait(6)
         self.session = SessionHelper(self)
         self.group = GroupHelper(self)
         self.contact = ContactHelper(self)
         self.Select = Select
+
+    def is_valid(self):
+        try:
+            self.wd.current_url
+            return True
+        except: # нас интересуют все проблемы
+            return False
 
     def open_home_page(self):
         wd = self.wd
