@@ -9,8 +9,11 @@ class ContactHelper:
 
     def return_to_contact_page(self):
         wd = self.app.wd
-        wd.find_element_by_link_text("home").click()
         # wd.find_element_by_xpath("//a[text()='home']").click()
+        if (wd.current_url.endswith("/addressbook/") or wd.current_url.endswith("/index.php")) and len(wd.find_elements_by_name("searchstring")) > 0:
+            return
+        wd.find_element_by_link_text("home").click()
+
 
     def contact_modify_presteps(self):
         wd = self.app.wd
