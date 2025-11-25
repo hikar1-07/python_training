@@ -12,13 +12,11 @@ class ContactHelper:
         wd.find_element_by_link_text("home").click()
         # wd.find_element_by_xpath("//a[text()='home']").click()
 
-    def delete_first_contact(self):
+    def contact_modify_presteps(self):
         wd = self.app.wd
         self.return_to_contact_page()
         wd.find_element_by_name("selected[]").click()
-        wd.find_element_by_xpath("//input[@value='Delete']").click()
-        # wd.switch_to.alert.accept().click()
-        self.return_to_contact_page()
+        wd.find_element_by_xpath("//img[@alt='Edit']").click()
 
     def create_contact(self, contact):
         wd = self.app.wd
@@ -29,6 +27,14 @@ class ContactHelper:
         self.fill_contact_form_bdata(Select, contact)
         self.fill_contact_form_adata(Select, contact)
         wd.find_element_by_xpath("//div[@id='content']/form/input[20]").click()
+        self.return_to_contact_page()
+
+    def delete_first_contact(self):
+        wd = self.app.wd
+        self.return_to_contact_page()
+        wd.find_element_by_name("selected[]").click()
+        wd.find_element_by_xpath("//input[@value='Delete']").click()
+        # wd.switch_to.alert.accept().click()
         self.return_to_contact_page()
 
     def modify_first_contact_all(self, new_contact_data):
@@ -59,12 +65,6 @@ class ContactHelper:
         wd.find_element_by_xpath("//input[@name='lastname']").send_keys("Zukova-Testovskaya")
         wd.find_element_by_xpath("//div[@id='content']/form/input[@value='Update']").click()
         self.return_to_contact_page()
-
-    def contact_modify_presteps(self):
-        wd = self.app.wd
-        self.return_to_contact_page()
-        wd.find_element_by_name("selected[]").click()
-        wd.find_element_by_xpath("//img[@alt='Edit']").click()
 
     def fill_contact_form_name_data(self, contact):
         wd = self.app.wd
@@ -121,3 +121,8 @@ class ContactHelper:
             wd.find_element_by_name(contact_field_name).click()
             wd.find_element_by_name(contact_field_name).clear()
             wd.find_element_by_name(contact_field_name).send_keys(contact_text)
+
+    def count(self):
+        wd = self.app.wd
+        self.return_to_contact_page()
+        return len(wd.find_elements_by_name("selected[]"))
