@@ -14,8 +14,8 @@ def test_modify_first_contact_all(app):
                 "www.yaya.com", "22", "July", "1991", "19","April", "2009")
     contact.id = old_contacts[0].id
     app.contact.modify_first_contact_all(contact)
+    assert len(old_contacts) == app.contact.count()
     new_contacts = app.contact.get_contact_list()
-    assert len(old_contacts) == len(new_contacts)
     old_contacts[0] = contact
     assert sorted(old_contacts, key=Contact.id_or_max) == sorted(new_contacts, key=Contact.id_or_max)
 
@@ -24,8 +24,8 @@ def test_modify_first_contact_lastname(app):
         app.contact.create_contact(Contact(firstname="Testusertodel"))
     old_contacts = app.contact.get_contact_list()
     app.contact.modify_first_contact_lastname()
+    assert len(old_contacts) == app.contact.count()
     new_contacts = app.contact.get_contact_list()
-    assert len(old_contacts) == len(new_contacts)
     modified_contact = Contact(lastname="Zukova-Testovskaya")
     modified_contact.id = old_contacts[0].id
     modified_contact.firstname = old_contacts[0].firstname
