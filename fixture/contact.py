@@ -17,6 +17,17 @@ class ContactHelper:
             return
         wd.find_element_by_link_text("home").click()
 
+    def select_contact_by_index(self, index):
+        wd = self.app.wd
+        self.return_to_contact_page()
+        wd.find_elements_by_name("selected[]")[index].click()
+
+    def contact_modify_presteps_random(self, index):
+        wd = self.app.wd
+        self.return_to_contact_page()
+        row = wd.find_elements_by_name("entry")[index]
+        row.find_element_by_xpath(".//img[@alt='Edit']").click()
+
     def contact_modify_presteps(self):
         wd = self.app.wd
         self.return_to_contact_page()
@@ -36,18 +47,33 @@ class ContactHelper:
         self.contact_cache = None
 
     def delete_first_contact(self):
+        self.delete_contact_by_index(0)
+
+    def delete_contact_by_index(self, index):
         wd = self.app.wd
-        self.return_to_contact_page()
-        wd.find_element_by_name("selected[]").click()
+        self.select_contact_by_index(index)
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         # wd.switch_to.alert.accept().click()
         self.return_to_contact_page()
         self.contact_cache = None
 
     def modify_first_contact_all(self, new_contact_data):
+        self.modify_contact_by_index(0, new_contact_data)
+        # wd = self.app.wd
+        # Select = self.app.Select
+        # self.contact_modify_presteps()
+        # self.fill_contact_form_name_data(new_contact_data)
+        # self.fill_contact_form_personal_data(new_contact_data)
+        # self.fill_contact_form_bdata(Select, new_contact_data)
+        # self.fill_contact_form_adata(Select, new_contact_data)
+        # wd.find_element_by_xpath("//div[@id='content']/form/input[@value='Update']").click()
+        # self.return_to_contact_page()
+        # self.contact_cache = None
+
+    def modify_contact_by_index(self, index, new_contact_data):
         wd = self.app.wd
         Select = self.app.Select
-        self.contact_modify_presteps()
+        self.contact_modify_presteps_random(index)
         self.fill_contact_form_name_data(new_contact_data)
         self.fill_contact_form_personal_data(new_contact_data)
         self.fill_contact_form_bdata(Select, new_contact_data)
@@ -66,9 +92,9 @@ class ContactHelper:
         self.return_to_contact_page()
         self.contact_cache = None
 
-    def modify_first_contact_lastname(self):
+    def modify_contact_lastname(self, index):
         wd = self.app.wd
-        self.contact_modify_presteps()
+        self.contact_modify_presteps_random(index)
         wd.find_element_by_name("lastname").click()
         wd.find_element_by_xpath("//input[@name='lastname']").clear()
         wd.find_element_by_xpath("//input[@name='lastname']").send_keys("Zukova-Testovskaya")
@@ -82,7 +108,6 @@ class ContactHelper:
         self.change_contact_field_value("middlename", contact.middlename)
         self.change_contact_field_value("lastname", contact.lastname)
         self.change_contact_field_value("nickname", contact.nickname)
-
 
     def fill_contact_form_personal_data(self, contact):
         wd = self.app.wd
