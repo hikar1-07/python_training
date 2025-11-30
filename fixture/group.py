@@ -73,6 +73,7 @@ class GroupHelper:
     def count(self):
         wd = self.app.wd
         self.open_groups_page()
+        # self.group_cache = None
         return len(wd.find_elements_by_name("selected[]"))
 
     group_cache = None

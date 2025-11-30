@@ -27,13 +27,17 @@ class ContactHelper:
         wd = self.app.wd
         self.return_to_contact_page()
         row = wd.find_elements_by_name("entry")[index]
-        row.find_element_by_xpath(".//img[@alt='Edit']").click()
+        # row.find_element_by_xpath(".//img[@alt='Edit']").click()
+        cell = row.find_elements_by_tag_name("td")[7]
+        cell.find_element_by_tag_name("a").click()
 
     def contact_modify_presteps(self):
         wd = self.app.wd
         self.return_to_contact_page()
-        wd.find_element_by_name("selected[]").click()
-        wd.find_element_by_xpath("//img[@alt='Edit']").click()
+        row = wd.find_elements_by_name("entry")[0]
+        # wd.find_element_by_xpath("//img[@alt='Edit']").click()
+        cell = row.find_elements_by_tag_name("td")[7]
+        cell.find_element_by_tag_name("a").click()
 
     def create_contact(self, contact):
         wd = self.app.wd
