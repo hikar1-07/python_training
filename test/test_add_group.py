@@ -3,24 +3,14 @@ from string import punctuation
 
 from model.group import Group
 from conftest import app
-import pytest
-import random
-import string
+# import pytest
+# from data.groups import testdata
+# from data.add_group import constant as testdata
 
 
-def random_string(prefix, maxlen):
-    symbols = string.ascii_letters + string.digits +  " " * 1 #string.punctuation +
-    return prefix + "".join([random.choice(symbols) for i in range(random.randrange(maxlen))])
-
-testdata = [Group(name="",header= "", footer="")] + [
-             Group(name=random_string("group name", 5),
-                   header=random_string("group header", 10),
-                   footer=random_string("group footer", 10)) for i in range(5)
-]
-
-
-@pytest.mark.parametrize("group", testdata, ids=[repr(x) for x in testdata])
-def test_add_group(app, group):
+# @pytest.mark.parametrize("group", testdata, ids=[repr(x) for x in testdata])
+def test_add_group(app, json_groups):
+    group = json_groups
     old_groups = app.group.get_group_list()
     app.group.create(group)
     assert len(old_groups) + 1 == app.group.count()
