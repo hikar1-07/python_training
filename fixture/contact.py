@@ -23,6 +23,11 @@ class ContactHelper:
         self.return_to_contact_page()
         wd.find_elements_by_name("selected[]")[index].click()
 
+    def select_contact_by_id(self, id):
+        wd = self.app.wd
+        self.return_to_contact_page()
+        wd.find_element_by_css_selector("input[id = '%s']" % id).click()
+
     def contact_modify_presteps_random(self, index):
         wd = self.app.wd
         self.return_to_contact_page()
@@ -38,6 +43,12 @@ class ContactHelper:
         # wd.find_element_by_xpath("//img[@alt='Edit']").click()
         cell = row.find_elements_by_tag_name("td")[7]
         cell.find_element_by_tag_name("a").click()
+
+    def contact_modify_presteps_id(self, id):
+        wd = self.app.wd
+        self.select_contact_by_id(id)
+        wd.find_element_by_css_selector(f"a[href='edit.php?id={id}']").click()
+        # wd.find_element_by_xpath("//img[@alt='Edit']").click()
 
     def create_contact(self, contact):
         wd = self.app.wd
@@ -59,6 +70,13 @@ class ContactHelper:
         self.select_contact_by_index(index)
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         # wd.switch_to.alert.accept().click()
+        self.return_to_contact_page()
+        self.contact_cache = None
+
+    def delete_contact_by_id(self, id):
+        wd = self.app.wd
+        self.select_contact_by_id(id)
+        wd.find_element_by_xpath("//input[@value='Delete']").click()
         self.return_to_contact_page()
         self.contact_cache = None
 
@@ -86,6 +104,19 @@ class ContactHelper:
         wd.find_element_by_xpath("//div[@id='content']/form/input[@value='Update']").click()
         self.return_to_contact_page()
         self.contact_cache = None
+
+    def modify_contact_by_id(self, id, new_contact_data):
+        wd = self.app.wd
+        Select = self.app.Select
+        self.contact_modify_presteps_id(id)
+        self.fill_contact_form_name_data(new_contact_data)
+        self.fill_contact_form_personal_data(new_contact_data)
+        self.fill_contact_form_bdata(Select, new_contact_data)
+        self.fill_contact_form_adata(Select, new_contact_data)
+        wd.find_element_by_xpath("//div[@id='content']/form/input[@value='Update']").click()
+        self.return_to_contact_page()
+        self.contact_cache = None
+
 
     def modify_first_contact_phone(self):
         wd = self.app.wd
