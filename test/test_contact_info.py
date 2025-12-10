@@ -45,7 +45,7 @@ def test_contact_info_on_home_page(app):
 
 def test_contacts_info_on_home_page_db(app, db):
     if len(db.get_contact_list()) == 0:
-        app.contact.create_contact(Contact(firstname="Testusertoinfo"))
+        app.contact.create_contact(Contact(firstname="Test_user_to_info"))
     contacts_from_db = sorted(db.get_contact_list(), key=Contact.id_or_max)
     contacts_from_home_page = sorted(app.contact.get_contact_list(), key=Contact.id_or_max)
     for i in range(len(contacts_from_db)):
