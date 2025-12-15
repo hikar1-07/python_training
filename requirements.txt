@@ -12,7 +12,7 @@ parse_type==0.6.6
 pip==25.1.1
 pluggy==1.6.0
 pony==0.7.17
-PyMySQL==1.0.3
+pymysql==1.0.3
 pytest==7.4.3
 pytest-bdd==8.1.0
 selenium==3.141.0
