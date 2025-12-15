@@ -1,5 +1,4 @@
 from pony.orm import *
-from pymysql.converters import decoders
 from model.group import Group
 from model.contact import Contact
 
