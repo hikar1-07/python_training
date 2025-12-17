@@ -23,4 +23,3 @@ tomli==2.3.0
 typing_extensions==4.15.0
 urllib3==1.26.18
 allure-pytest==2.15.1
-allure-python-commons==2.15.2
